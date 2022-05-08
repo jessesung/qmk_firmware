@@ -87,7 +87,7 @@ void matrix_print(void) {
         print_hex8(row);
         print(": ");
         print_matrix_row(row);
-        print("\n");
+        print("\n ");
     }
 }
 
