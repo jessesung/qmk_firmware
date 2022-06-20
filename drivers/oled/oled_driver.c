@@ -276,7 +276,7 @@ __attribute__((weak)) void oled_driver_init(void) {
 
 // Flips the rendering bits for a character at the current cursor position
 static void InvertCharacter(uint8_t *cursor) {
-    const uint8_t *end = cursor + OLED_FONT_WIDTH;
+    const uint8_t *end = cursor + OLED_FONT_WIDTH * OLED_FONT_SIZE;
     while (cursor < end) {
         *cursor = ~(*cursor);
         cursor++;
@@ -533,7 +533,7 @@ void oled_render_dirty(bool all) {
 }
 
 void oled_set_cursor(uint8_t col, uint8_t line) {
-    uint16_t index = line * oled_rotation_width + col * OLED_FONT_WIDTH;
+    uint16_t index = line * oled_rotation_width + col * OLED_FONT_WIDTH * OLED_FONT_SIZE;
 
     // Out of bounds?
     if (index >= OLED_MATRIX_SIZE) {
@@ -549,7 +549,7 @@ void oled_advance_page(bool clearPageRemainder) {
 
     if (clearPageRemainder) {
         // Remaining Char count
-        remaining = remaining / OLED_FONT_WIDTH;
+        remaining = remaining / (OLED_FONT_WIDTH * OLED_FONT_SIZE);
 
         // Write empty character until next line
         while (remaining--)
@@ -561,16 +561,16 @@ void oled_advance_page(bool clearPageRemainder) {
             remaining = 0;
         }
 
-        oled_cursor = &oled_buffer[index + remaining];
+        oled_cursor = &oled_buffer[index + remaining + oled_rotation_width*(OLED_FONT_SIZE<<1)];
     }
 }
 
 void oled_advance_char(void) {
-    uint16_t nextIndex      = oled_cursor - &oled_buffer[0] + OLED_FONT_WIDTH;
+    uint16_t nextIndex      = oled_cursor - &oled_buffer[0] + OLED_FONT_WIDTH * OLED_FONT_SIZE;
     uint8_t  remainingSpace = oled_rotation_width - (nextIndex % oled_rotation_width);
 
     // Do we have enough space on the current line for the next character
-    if (remainingSpace < OLED_FONT_WIDTH) {
+    if (remainingSpace < OLED_FONT_WIDTH * OLED_FONT_SIZE) {
         nextIndex += remainingSpace;
     }
 
@@ -598,18 +598,52 @@ void oled_write_char(const char data, bool invert) {
     }
 
     // copy the current render buffer to check for dirty after
-    static uint8_t oled_temp_buffer[OLED_FONT_WIDTH];
-    memcpy(&oled_temp_buffer, oled_cursor, OLED_FONT_WIDTH);
+    static uint8_t oled_temp_buffer[OLED_FONT_WIDTH * OLED_FONT_SIZE];
+    memcpy(&oled_temp_buffer, oled_cursor, OLED_FONT_WIDTH * OLED_FONT_SIZE);
 
     _Static_assert(sizeof(font) >= ((OLED_FONT_END + 1 - OLED_FONT_START) * OLED_FONT_WIDTH), "OLED_FONT_END references outside array");
 
     // set the reder buffer data
     uint8_t cast_data = (uint8_t)data; // font based on unsigned type for index
     if (cast_data < OLED_FONT_START || cast_data > OLED_FONT_END) {
-        memset(oled_cursor, 0x00, OLED_FONT_WIDTH);
+        memset(oled_cursor, 0x00, OLED_FONT_WIDTH * OLED_FONT_SIZE);
     } else {
-        const uint8_t *glyph = &font[(cast_data - OLED_FONT_START) * OLED_FONT_WIDTH];
-        memcpy_P(oled_cursor, glyph, OLED_FONT_WIDTH);
+        // const uint8_t *glyph = &font[(cast_data - OLED_FONT_START) * OLED_FONT_WIDTH];
+        // AA
+        // AA
+        // 12*16 outline
+
+        static const uint8_t PROGMEM upper[] = {135,129,129,128,  0,  0,  0,  0,128,129,129,135, };
+        static const uint8_t PROGMEM lower[] = {224,128,128,  0,  1,  1,  1,  1,  0,128,128,224, };
+        memcpy_P(oled_cursor, upper, OLED_FONT_WIDTH * OLED_FONT_SIZE);
+
+          // Invert if needed
+        if (invert) {
+            InvertCharacter(oled_cursor);
+        }
+
+        // Dirty check
+        if (memcmp(&oled_temp_buffer, oled_cursor, OLED_FONT_WIDTH * OLED_FONT_SIZE)) {
+            uint16_t index = oled_cursor - &oled_buffer[0];
+            oled_dirty |= ((OLED_BLOCK_TYPE)1 << (index / OLED_BLOCK_SIZE));
+            // Edgecase check if the written data spans the 2 chunks
+            oled_dirty |= ((OLED_BLOCK_TYPE)1 << ((index + OLED_FONT_WIDTH * OLED_FONT_SIZE - 1) / OLED_BLOCK_SIZE));
+        }
+        // oled_advance_char();
+        oled_cursor += oled_rotation_width;
+        memcpy_P(oled_cursor, lower, OLED_FONT_WIDTH * OLED_FONT_SIZE);
+        // for(int i=0; i<OLED_FONT_SIZE; i++){
+        //     memcpy_P(oled_cursor+OLED_FONT_WIDTH*i, glyph, OLED_FONT_WIDTH);
+        // }
+
+        // Dirty check
+        if (memcmp(&oled_temp_buffer, oled_cursor, OLED_FONT_WIDTH * OLED_FONT_SIZE)) {
+            uint16_t index = oled_cursor - &oled_buffer[0];
+            oled_dirty |= ((OLED_BLOCK_TYPE)1 << (index / OLED_BLOCK_SIZE));
+            // Edgecase check if the written data spans the 2 chunks
+            oled_dirty |= ((OLED_BLOCK_TYPE)1 << ((index + OLED_FONT_WIDTH * OLED_FONT_SIZE - 1) / OLED_BLOCK_SIZE));
+        }
+        oled_cursor -= oled_rotation_width; // reset cursor
     }
 
     // Invert if needed
@@ -617,13 +651,7 @@ void oled_write_char(const char data, bool invert) {
         InvertCharacter(oled_cursor);
     }
 
-    // Dirty check
-    if (memcmp(&oled_temp_buffer, oled_cursor, OLED_FONT_WIDTH)) {
-        uint16_t index = oled_cursor - &oled_buffer[0];
-        oled_dirty |= ((OLED_BLOCK_TYPE)1 << (index / OLED_BLOCK_SIZE));
-        // Edgecase check if the written data spans the 2 chunks
-        oled_dirty |= ((OLED_BLOCK_TYPE)1 << ((index + OLED_FONT_WIDTH - 1) / OLED_BLOCK_SIZE));
-    }
+
 
     // Finally move to the next char
     oled_advance_char();
@@ -912,16 +940,16 @@ bool oled_invert(bool invert) {
 
 uint8_t oled_max_chars(void) {
     if (!HAS_FLAGS(oled_rotation, OLED_ROTATION_90)) {
-        return OLED_DISPLAY_WIDTH / OLED_FONT_WIDTH;
+        return OLED_DISPLAY_WIDTH / OLED_FONT_WIDTH / OLED_FONT_SIZE;
     }
-    return OLED_DISPLAY_HEIGHT / OLED_FONT_WIDTH;
+    return OLED_DISPLAY_HEIGHT / OLED_FONT_WIDTH / OLED_FONT_SIZE;
 }
 
 uint8_t oled_max_lines(void) {
     if (!HAS_FLAGS(oled_rotation, OLED_ROTATION_90)) {
-        return OLED_DISPLAY_HEIGHT / OLED_FONT_HEIGHT;
+        return OLED_DISPLAY_HEIGHT / OLED_FONT_HEIGHT / OLED_FONT_SIZE;
     }
-    return OLED_DISPLAY_WIDTH / OLED_FONT_HEIGHT;
+    return OLED_DISPLAY_WIDTH / OLED_FONT_HEIGHT / OLED_FONT_SIZE;
 }
 
 void oled_task(void) {
