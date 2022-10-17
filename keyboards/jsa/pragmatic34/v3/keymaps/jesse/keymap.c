@@ -27,16 +27,16 @@
 #define _RC(X) RCTL_T(X)
 #define _RS(X) RSFT_T(X)
 
-#define COPY    C(KC_C)
-#define PSTE    C(KC_V)
-#define CUT     C(KC_X)
-#define ZOOMIN  C(KC_PLUS)
+#define COPY C(KC_C)
+#define PSTE C(KC_V)
+#define CUT C(KC_X)
+#define ZOOMIN C(KC_PLUS)
 #define ZOOMOUT C(KC_PMNS)
-#define ACTUAL  C(KC_0)
+#define ACTUAL C(KC_0)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
-     [0] = LAYOUT(
+    [0] = LAYOUT(
              KC_Q,     KC_W,     KC_F,     KC_P, KC_B, KC_J,     KC_L,     KC_U,     KC_Y,  KC_SCLN,
         _LG(KC_A),_LA(KC_R),_LC(KC_S),_LS(KC_T), KC_G, KC_M,_LS(KC_N),_LC(KC_E),_LA(KC_I),_LG(KC_O),
              KC_Z,     KC_X,     KC_C,     KC_D, KC_V, KC_K,     KC_H,  KC_COMM,   KC_DOT,  KC_SLSH,
@@ -87,64 +87,61 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 void keyboard_post_init_user(void) {
-  // Customise these values to desired behaviour
-  debug_enable=true;
-//   debug_matrix=true;
-//   debug_keyboard=true;
-//   debug_mouse=true;
+    // Customise these values to desired behaviour
+    debug_enable = true;
+    //   debug_matrix=true;
+    //   debug_keyboard=true;
+    //   debug_mouse=true;
 }
 
 #ifdef OLED_ENABLE
 
-bool oled_needs_update = true;
-bool caps_lock = false;
-uint8_t layer=0;
+bool    oled_needs_update = true;
+bool    caps_lock         = false;
+uint8_t layer             = 0;
 
 // for caps lock
-bool led_update_user(led_t led_state){
-    if( caps_lock == led_state.caps_lock) return true;
+bool led_update_user(led_t led_state) {
+    if (caps_lock == led_state.caps_lock) return true;
     dprint("caps lock changed\n");
 
-    caps_lock = led_state.caps_lock;
+    caps_lock         = led_state.caps_lock;
     oled_needs_update = true;
     return true;
 }
 
-
-layer_state_t layer_state_set_user(layer_state_t state){
+layer_state_t layer_state_set_user(layer_state_t state) {
     // render layer indicator
-    if(layer == get_highest_layer(state)) return state;
+    if (layer == get_highest_layer(state)) return state;
     dprint("layer changed\n");
 
-    layer = get_highest_layer(state);
+    layer             = get_highest_layer(state);
     oled_needs_update = true;
     return state;
 }
 
 bool oled_task_user(void) {
-    if(!oled_needs_update) return false;
+    if (!oled_needs_update) return false;
     oled_needs_update = false;
 
     // render caps lock indicator
-    if(caps_lock){
+    if (caps_lock) {
         oled_write_P(PSTR("CAPS LOCK"), false);
-    }else{
+    } else {
         oled_write_P(PSTR("PRAGMATIC"), false);
     }
 
     oled_set_cursor(0, 1);
 
-    if(layer==0){
+    if (layer == 0) {
         oled_write_P(PSTR("-= 34 =-"), false);
     } else {
-
-        char layer_indicator[]="--------";
-        layer_indicator[layer]=layer+48;    // ex. ---3---
+        char layer_indicator[] = "--------";
+        layer_indicator[layer] = layer + 48; // ex. ---3---
         oled_write(layer_indicator, false);
-        layer_indicator[layer]='-'; // reset indicator
+        layer_indicator[layer] = '-'; // reset indicator
     }
     return false;
 }
 
 #endif // OLED_ENABLE
-
