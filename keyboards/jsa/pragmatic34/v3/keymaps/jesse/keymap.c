@@ -36,11 +36,11 @@
 
 enum my_layers {
     COLEMAK = 0,
+    QWERTY,
     NUM,
     SYM,
     WM,
     FUNC,
-    QWERTY,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -49,11 +49,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              KC_Q,     KC_W,     KC_F,     KC_P, KC_B, KC_J,     KC_L,     KC_U,     KC_Y,  KC_SCLN,
         _LG(KC_A),_LA(KC_R),_LC(KC_S),_LS(KC_T), KC_G, KC_M,_LS(KC_N),_LC(KC_E),_LA(KC_I),_LG(KC_O),
              KC_Z,     KC_X,     KC_C,     KC_D, KC_V, KC_K,     KC_H,  KC_COMM,   KC_DOT,  KC_SLSH,
-                           TG(QWERTY), LT(NUM,KC_SPC),LT(SYM,KC_BSPC), LT(WM,KC_ENT)
+                      LT(FUNC,KC_TAB), LT(NUM,KC_SPC),LT(SYM,KC_BSPC), LT(WM,KC_ENT)
     ),
     [NUM] = LAYOUT(
         KC_ESC,  _______, _______,  KC_UNDS, KC_DQUO, KC_PLUS, KC_7,   KC_8,   KC_9,   KC_PERC,
-        KC_TAB,  CUT,     COPY,      PSTE,   KC_QUOT,  KC_MINS, KC_4,   KC_5,   KC_6,   KC_ASTR,
+        _______,  CUT,     COPY,      PSTE,   KC_QUOT,  KC_MINS, KC_4,   KC_5,   KC_6,   KC_ASTR,
         KC_CAPS,ZOOMIN, ZOOMOUT,   ACTUAL,  KC_EQL,  KC_DLR,  KC_1,   KC_2,   KC_3,   KC_SLSH,
                                      _______, XXXXXXX, KC_0,   KC_DOT
     ),
@@ -67,13 +67,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, G(KC_7), G(KC_8), G(KC_9), G(KC_MINS), _______, _______, G(KC_UP), _______, _______,
         KC_LSFT, G(KC_4), G(KC_5), G(KC_6), G(KC_0), _______, G(KC_LEFT), G(KC_DOWN), G(KC_RGHT), _______,
         _______, G(KC_1), G(KC_2), G(KC_3), _______, _______, _______, _______, _______, _______,
-                                   KC_VOLD, KC_VOLU, _______, XXXXXXX
+                                   _______, _______, _______, XXXXXXX
+    ),
+    [FUNC] = LAYOUT(
+        TG(QWERTY), _______, _______, _______, _______,  _______, _______, _______, _______, _______,
+           _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,
+           KC_VOLD, KC_VOLU, _______, _______, _______,  _______, _______, _______, _______, _______,
+                                      XXXXXXX, _______, C(KC_SPC), _______
     ),
     [QWERTY] = LAYOUT(
              KC_Q,     KC_W,     KC_E,     KC_R, KC_T, KC_Y,     KC_U,     KC_I,     KC_O,  KC_P,
         _LG(KC_A),_LA(KC_S),_LC(KC_D),_LS(KC_F), KC_G, KC_H,_LS(KC_J),_LC(KC_K),_LA(KC_L),_LG(KC_SCLN),
              KC_Z,     KC_X,     KC_C,     KC_V, KC_B, KC_N,     KC_M,  KC_COMM,   KC_DOT,  KC_SLSH,
-                                  _______, KC_SPC,KC_BSPC, KC_ENT
+                               _______, _______, _______, _______
     ),
 };
 
