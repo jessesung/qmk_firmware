@@ -64,11 +64,6 @@ static inline uint8_t readMatrixPin(pin_t pin) {
 }
 
 // matrix code
-
-#if defined(DIODE_DIRECTION)
-#    if defined(MATRIX_ROW_PINS) && defined(MATRIX_COL_PINS)
-#        if (DIODE_DIRECTION == COL2ROW)
-
 static bool select_row(uint8_t row) {
     pin_t pin = row_pins[row];
     if (pin != NO_PIN) {
@@ -92,15 +87,6 @@ static void unselect_row(uint8_t row) {
 static void unselect_rows(void) {
     for (uint8_t x = 0; x < MATRIX_ROWS; x++) {
         unselect_row(x);
-    }
-}
-
-__attribute__((weak)) void matrix_init_pins(void) {
-    unselect_rows();
-    for (uint8_t x = 0; x < MATRIX_COLS; x++) {
-        if (col_pins[x] != NO_PIN) {
-            setPinInputHigh_atomic(col_pins[x]);
-        }
     }
 }
 
@@ -129,8 +115,6 @@ __attribute__((weak)) void matrix_read_cols_on_row(matrix_row_t current_matrix[]
     // Update the matrix
     current_matrix[current_row] = current_row_value;
 }
-
-#        elif (DIODE_DIRECTION == ROW2COL)
 
 static bool select_col(uint8_t col) {
     pin_t pin = col_pins[col];
@@ -165,6 +149,12 @@ __attribute__((weak)) void matrix_init_pins(void) {
             setPinInputHigh_atomic(row_pins[x]);
         }
     }
+    unselect_rows();
+    for (uint8_t x = 0; x < MATRIX_COLS; x++) {
+        if (col_pins[x] != NO_PIN) {
+            setPinInputHigh_atomic(col_pins[x]);
+        }
+    }
 }
 
 __attribute__((weak)) void matrix_read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col, matrix_row_t row_shifter) {
@@ -194,14 +184,6 @@ __attribute__((weak)) void matrix_read_rows_on_col(matrix_row_t current_matrix[]
     matrix_output_unselect_delay(current_col, key_pressed); // wait for all Row signals to go HIGH
 }
 
-#        else
-#            error DIODE_DIRECTION must be one of COL2ROW or ROW2COL!
-#        endif
-#    endif // defined(MATRIX_ROW_PINS) && defined(MATRIX_COL_PINS)
-#else
-#    error DIODE_DIRECTION is not defined!
-#endif
-
 void matrix_init(void) {
     // initialize key pins
     matrix_init_pins();
@@ -218,18 +200,17 @@ void matrix_init(void) {
 uint8_t matrix_scan(void) {
     matrix_row_t curr_matrix[MATRIX_ROWS] = {0};
 
-#if defined(DIRECT_PINS) || (DIODE_DIRECTION == COL2ROW)
     // Set row, read cols
     for (uint8_t current_row = 0; current_row < MATRIX_ROWS; current_row++) {
         matrix_read_cols_on_row(curr_matrix, current_row);
     }
-#elif (DIODE_DIRECTION == ROW2COL)
+
     // Set col, read rows
     matrix_row_t row_shifter = MATRIX_ROW_SHIFTER;
-    for (uint8_t current_col = 0; current_col < MATRIX_COLS; current_col++, row_shifter <<= 1) {
+    for (uint8_t current_col = 1; current_col < MATRIX_COLS; current_col++, current_col++, row_shifter <<= 1) {
         matrix_read_rows_on_col(curr_matrix, current_col, row_shifter);
     }
-#endif
+
 
     bool changed = memcmp(raw_matrix, curr_matrix, sizeof(curr_matrix)) != 0;
     if (changed) memcpy(raw_matrix, curr_matrix, sizeof(curr_matrix));

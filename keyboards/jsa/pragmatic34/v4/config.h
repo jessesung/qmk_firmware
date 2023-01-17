@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID   0xA805
 #define DEVICE_VER   0x0300
 #define MANUFACTURER Pragmatic Inc.
-#define PRODUCT      Pragmatic 34 V4
+#define PRODUCT      Pragmatic 34 v4
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -41,11 +41,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 #define MATRIX_ROW_PINS { E6, B4, B5, F6 }
-#define MATRIX_COL_PINS { D2, D4, D7, D3, C6, B6, B3, B1, F7, F5 }
+#define MATRIX_COL_PINS { D7, D7, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN }
 #define UNUSED_PINS
 
 /* COL2ROW, ROW2COL */
-#define DIODE_DIRECTION ROW2COL
+#define DIODE_DIRECTION COL2ROW
 
 /*
  * Split Keyboard specific options, make sure you have 'SPLIT_KEYBOARD = yes' in your rules.mk, and define SOFT_SERIAL_PIN.
