@@ -5,3 +5,5 @@ QMK_SETTINGS = yes
 
 EXTRAFLAGS += -flto
 
+CUSTOM_MATRIX = lite
+SRC += matrix.c
