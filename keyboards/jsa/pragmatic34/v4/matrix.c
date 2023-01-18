@@ -101,7 +101,7 @@ __attribute__((weak)) void matrix_read_cols_on_row(matrix_row_t current_matrix[]
 
     // For each col...
     matrix_row_t row_shifter = MATRIX_ROW_SHIFTER;
-    for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++, row_shifter <<= 1) {
+    for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++, col_index++, row_shifter <<= 1) {
         uint8_t pin_state = readMatrixPin(col_pins[col_index]);
 
         // Populate the matrix row with the state of the col pin
@@ -200,14 +200,16 @@ void matrix_init(void) {
 uint8_t matrix_scan(void) {
     matrix_row_t curr_matrix[MATRIX_ROWS] = {0};
 
+    // COL2ROW, odd cols
     // Set row, read cols
     for (uint8_t current_row = 0; current_row < MATRIX_ROWS; current_row++) {
         matrix_read_cols_on_row(curr_matrix, current_row);
     }
 
+    // ROW2COL, even cols
     // Set col, read rows
-    matrix_row_t row_shifter = MATRIX_ROW_SHIFTER;
-    for (uint8_t current_col = 1; current_col < MATRIX_COLS; current_col++, current_col++, row_shifter <<= 1) {
+    matrix_row_t row_shifter = MATRIX_ROW_SHIFTER << 1;
+    for (uint8_t current_col = 1; current_col < MATRIX_COLS; current_col++, current_col++, row_shifter <<= 2) {
         matrix_read_rows_on_col(curr_matrix, current_col, row_shifter);
     }
 
