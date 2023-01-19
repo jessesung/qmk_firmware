@@ -101,7 +101,7 @@ __attribute__((weak)) void matrix_read_cols_on_row(matrix_row_t current_matrix[]
 
     // For each col...
     matrix_row_t row_shifter = MATRIX_ROW_SHIFTER;
-    for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++, col_index++, row_shifter <<= 1) {
+    for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++, col_index++, row_shifter <<= 2) {
         uint8_t pin_state = readMatrixPin(col_pins[col_index]);
 
         // Populate the matrix row with the state of the col pin
