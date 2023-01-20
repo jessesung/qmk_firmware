@@ -13,6 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "action_layer.h"
+#include "keycodes.h"
+#include "keymap_us.h"
 #include QMK_KEYBOARD_H
 
 #define _LG(X) LGUI_T(X)
@@ -41,6 +44,10 @@ static void u_td_fn_boot(qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [U_TD_BOOT] = ACTION_TAP_DANCE_FN(u_td_fn_boot),
+};
+
+enum custom_keycodes {
+    IME = SAFE_RANGE,
 };
 
 enum my_layers {
@@ -86,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______
     ),
     [NAV] = LAYOUT(
-        TG(QWERTY), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        TG(QWERTY), IME, XXXXXXX, XXXXXXX, XXXXXXX,
             REDO, PSTE, COPY, CUT, UNDO,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,
             XXXXXXX, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
@@ -207,6 +214,19 @@ bool oled_task_user(void) {
     if (layer_name)
         oled_write(layer_name, false);
     return false;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case IME:
+            if (record->event.pressed) {
+                layer_invert(QWERTY);
+                SEND_STRING(SS_LCTL(" "));
+            }
+            return false;
+            break;
+    }
+    return true;
 }
 
 #endif // OLED_ENABLE
