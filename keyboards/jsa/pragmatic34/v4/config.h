@@ -24,11 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID   0xA805
 #define DEVICE_VER   0x0300
 #define MANUFACTURER Pragmatic Inc.
-#define PRODUCT      Pragmatic 34 v4
+#define PRODUCT      Pragmatic 42
 
 /* key matrix size */
 #define MATRIX_ROWS 4
-#define MATRIX_COLS 10
+#define MATRIX_COLS 12
 
 /*
  * Keyboard Matrix Assignments
@@ -40,8 +40,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
  */
-#define MATRIX_ROW_PINS { E6, B4, B5, F6 }
-#define MATRIX_COL_PINS { NO_PIN, NO_PIN, NO_PIN, NO_PIN, D7, D7, NO_PIN, NO_PIN, NO_PIN, NO_PIN }
+#define MATRIX_ROW_PINS { D7, E6, B4, B5 }
+#define MATRIX_COL_PINS { F6, F6, F5, F5, F4, F4, F7, F7, B1, B1, B3, B3 }
 #define UNUSED_PINS
 
 /* COL2ROW, ROW2COL */
