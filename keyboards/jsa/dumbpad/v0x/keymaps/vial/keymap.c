@@ -54,6 +54,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
+#if defined(ENCODER_MAP_ENABLE)
+#define NUM_ENCODERS 1
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+    [0] =   { ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [1] =   { ENCODER_CCW_CW(KC_BRMD, KC_BRMU)  },
+    [2] =   { ENCODER_CCW_CW(KC_PGDN, KC_PGUP)  },
+    [3] =   { ENCODER_CCW_CW(KC_RIGHT, KC_LEFT) },
+};
+#endif
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // If console is enabled, it will print the matrix position and status of each key pressed
 /*
@@ -70,38 +80,4 @@ void keyboard_post_init_user(void) {
     //debug_matrix = true;
     //debug_keyboard = true;
     //debug_mouse = true;
-}
-
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    /*  Custom encoder control - handles CW/CCW turning of encoder
-     *  Default behavior:
-     *    main layer:
-     *       CW: move mouse right
-     *      CCW: move mouse left
-     *    other layers:
-     *       CW: = (equals/plus - increase slider in Adobe products)
-     *      CCW: - (minus/underscore - decrease slider in adobe products)
-     */
-    if (index == 0) {
-        switch (get_highest_layer(layer_state)) {
-            case 0:
-                // main layer - move mouse right (CW) and left (CCW)
-                if (clockwise) {
-                    tap_code_delay(KC_VOLU, 10);
-                } else {
-                    tap_code_delay(KC_VOLD, 10);
-                }
-                break;
-
-            default:
-                // other layers - =/+ (quals/plus) (CW) and -/_ (minus/underscore) (CCW)
-                if (clockwise) {
-                    tap_code(KC_EQL);
-                } else {
-                    tap_code(KC_MINS);
-                }
-                break;
-        }
-    }
-    return true;
 }
