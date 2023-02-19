@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* USB Device descriptor parameter */
 #define VENDOR_ID    0x1209
 #define PRODUCT_ID   0xA805
-#define DEVICE_VER   0x5601 // 56 keys r1 duplex matrix
+#define DEVICE_VER   0x0100 // 56 keys r1 duplex matrix
 #define MANUFACTURER Pragmatic Inc.
 #define PRODUCT      Pragmatic 56
 
@@ -40,8 +40,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
  */
-#define MATRIX_ROW_PINS { C6, D7, E6, B4, B5 }
-#define MATRIX_COL_PINS { F6, F6, F5, F5, F4, F4, F7, F7, B1, B1, B3, B3 }
+#define MATRIX_ROW_PINS { F4, F5, F6, F7, C6 }
+#define MATRIX_COL_PINS { B1, B1, B3, B3, B2, B2, B4, B4, E6, E6, D7, D7 }
 #define UNUSED_PINS
 
 /* COL2ROW, ROW2COL */
@@ -91,8 +91,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#endif
 
 // https://docs.qmk.fm/using-qmk/software-features/tap_hold
-#define TAPPING_TERM 200
+#define TAPPING_TERM 250
 #define IGNORE_MOD_TAP_INTERRUPT
+#define PERMISSIVE_HOLD
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
