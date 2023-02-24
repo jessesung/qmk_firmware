@@ -41,8 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 #define MATRIX_ROW_PINS { F4, F5, F6, F7, C6 }
-#define MATRIX_COL_PINS { B1, B1, B3, B3, B2, B2, B4, B4, E6, E6, D7, D7 }
-#define UNUSED_PINS
+#define MATRIX_COL_PINS { D7, D7, E6, E6, B4, B4, B2, B2, B3, B3, B1, B1 }  // flipped
 
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION COL2ROW
@@ -147,10 +146,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
-
-/* disable these deprecated features by default */
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
 
 /* Bootmagic Lite key configuration */
 //#define BOOTMAGIC_LITE_ROW 0
