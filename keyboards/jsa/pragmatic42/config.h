@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* USB Device descriptor parameter */
 #define VENDOR_ID    0x1209
 #define PRODUCT_ID   0xA805
-#define DEVICE_VER   0x0300
+#define DEVICE_VER   0x0100 // 42 keys r1 duplex matrix
 #define MANUFACTURER Pragmatic Inc.
 #define PRODUCT      Pragmatic 42
 
@@ -40,10 +40,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
  */
-#define MATRIX_ROW_PINS { D7, E6, B4, B5 }
-#define MATRIX_COL_PINS { F6, F6, F5, F5, F4, F4, F7, F7, B1, B1, B3, B3 }
-#define UNUSED_PINS
-
+#define MATRIX_ROW_PINS { F5, F6, F7, C6 }
+#define MATRIX_COL_PINS { B1, B1, B3, B3, B2, B2, B4, B4, E6, E6, D7, D7 }
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
@@ -91,8 +89,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#endif
 
 // https://docs.qmk.fm/using-qmk/software-features/tap_hold
-#define TAPPING_TERM 200
+#define TAPPING_TERM 250
 #define IGNORE_MOD_TAP_INTERRUPT
+#define PERMISSIVE_HOLD
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
@@ -147,22 +146,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
 
-/* disable these deprecated features by default */
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
-
 /* Bootmagic Lite key configuration */
 //#define BOOTMAGIC_LITE_ROW 0
 //#define BOOTMAGIC_LITE_COLUMN 0
-
-// 354 bytes, 6x8 font, 59 characters, 6 bytes per character,
-// From Space to Z
-#define OLED_FONT_START     32   // SPACE
-#define OLED_FONT_END       90   // Z
-#define OLED_FONT_WIDTH     6
-#define OLED_FONT_HEIGHT    8
-#define OLED_FONT_SIZE      2    // 1 or 2
-#define OLED_FONT_H         "keyboards/jsa/lib/glcdfont.c"
-#define OLED_FONT_INTERLACING true
-
-#define OLED_UPDATE_INTERVAL 100 //ms 一定要設，不然不會清除畫面。
