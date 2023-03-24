@@ -4,7 +4,7 @@
     "productId": "0xA805",
     "lighting": "none",
     "matrix": {
-        "rows": 5,
+        "rows": 4,
         "cols": 12
     },
     "layouts": {
