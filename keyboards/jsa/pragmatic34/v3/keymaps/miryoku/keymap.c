@@ -37,12 +37,12 @@ enum {
     U_TD_BOOT,
 };
 
-static void u_td_fn_boot(qk_tap_dance_state_t *state, void *user_data) {
+static void u_td_fn_boot(tap_dance_state_t *state, void *user_data) {
     if (state->count == 2)
         reset_keyboard();
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [U_TD_BOOT] = ACTION_TAP_DANCE_FN(u_td_fn_boot),
 };
 
