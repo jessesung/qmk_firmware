@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* USB Device descriptor parameter */
 #define VENDOR_ID    0x1209
 #define PRODUCT_ID   0xA805
-#define DEVICE_VER   0x0300
+#define DEVICE_VER   0x0310     // 3.1 加上usb power descripter
 #define MANUFACTURER Pragmatic Inc.
 #define PRODUCT      Pragmatic 60
 
@@ -42,11 +42,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #define MATRIX_ROW_PINS { D0, F6, C6, E6, B2 }
 #define MATRIX_COL_PINS { D3, D2, D4, D7, B4, B5, B6, B3, B1, F7, F5, F4 }
-#define UNUSED_PINS
 
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
+#define USB_MAX_POWER_CONSUMPTION 80
 /*
  * Split Keyboard specific options, make sure you have 'SPLIT_KEYBOARD = yes' in your rules.mk, and define SOFT_SERIAL_PIN.
  */
@@ -147,9 +147,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
 
-/* disable these deprecated features by default */
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
 
 /* Bootmagic Lite key configuration */
 //#define BOOTMAGIC_LITE_ROW 0

@@ -15,9 +15,6 @@
  */
 #include QMK_KEYBOARD_H
 
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
-
 // Defines names for use in layer keycodes and the keymap
 // enum layer_names {
 //     _QWERTY,
