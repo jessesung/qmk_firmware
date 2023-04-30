@@ -1,0 +1,8 @@
+VIA_ENABLE = yes
+VIAL_ENABLE = yes
+VIAL_INSECURE = yes
+QMK_SETTINGS = no
+OLED_ENABLE     = yes
+OLED_DRIVER     = SSD1306
+
+EXTRAFLAGS += -flto
