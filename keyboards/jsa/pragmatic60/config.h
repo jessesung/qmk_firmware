@@ -22,9 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* USB Device descriptor parameter */
 #define VENDOR_ID    0x1209
 #define PRODUCT_ID   0xA805
-#define DEVICE_VER   0x0310     // 3.1 加上usb power descripter
+#define DEVICE_VER   0x0410     // 加上usb power descripter
 #define MANUFACTURER Pragmatic Inc.
 #define PRODUCT      Pragmatic 60
+#define USB_MAX_POWER_CONSUMPTION 80
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -46,7 +47,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
-#define USB_MAX_POWER_CONSUMPTION 80
 /*
  * Split Keyboard specific options, make sure you have 'SPLIT_KEYBOARD = yes' in your rules.mk, and define SOFT_SERIAL_PIN.
  */
