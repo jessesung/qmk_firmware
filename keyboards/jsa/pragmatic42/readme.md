@@ -25,3 +25,10 @@ Enter the bootloader in 3 ways:
 * **Bootmagic reset**: Hold down the key at (0,0) in the matrix (usually the top left key or Escape) and plug in the keyboard
 * **Physical reset button**: Briefly press the button on the back of the PCB - some may have pads you must short instead
 * **Keycode in layout**: Press the key mapped to `RESET` if it is available
+
+### v4.1 2023-04-24
+- set `USB_MAX_POWER_CONSUMPTION` from 500mA(default) to 80mA. Current type-C promicro has 3 LED, regular working power is 60mA.
+
+### v1.1 2023-03-22 bug fix 
+
+### v1.0 first release
