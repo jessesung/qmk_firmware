@@ -22,9 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* USB Device descriptor parameter */
 #define VENDOR_ID    0x1209
 #define PRODUCT_ID   0xA805
-#define DEVICE_VER   0x0100 // 56 keys r1 duplex matrix
+#define DEVICE_VER   0x0410 // 56 keys r1 duplex matrix
 #define MANUFACTURER Pragmatic Inc.
 #define PRODUCT      Pragmatic 56
+#define USB_MAX_POWER_CONSUMPTION 80
 
 /* key matrix size */
 #define MATRIX_ROWS 5
