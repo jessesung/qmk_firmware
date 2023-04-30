@@ -22,9 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* USB Device descriptor parameter */
 #define VENDOR_ID    0x1209
 #define PRODUCT_ID   0xA805
-#define DEVICE_VER   0x0300
+#define DEVICE_VER   0x0410
 #define MANUFACTURER Pragmatic Inc.
 #define PRODUCT      Pragmatic 34
+#define USB_MAX_POWER_CONSUMPTION 80
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -42,7 +43,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #define MATRIX_ROW_PINS { F6, C6, E6, B2 }
 #define MATRIX_COL_PINS { D2, D4, D7, B4, B5, B6, B3, B1, F7, F5 }
-#define UNUSED_PINS
 
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION COL2ROW
@@ -146,10 +146,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
-
-/* disable these deprecated features by default */
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
 
 /* Bootmagic Lite key configuration */
 //#define BOOTMAGIC_LITE_ROW 0
