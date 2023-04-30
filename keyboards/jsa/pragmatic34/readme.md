@@ -10,7 +10,8 @@
 
 Make example for this keyboard (after setting up your build environment):
 
-    make pragmatic:default
+    make jsa/pragmatic34:vial      // for vial + qmk settings
+    make jsa/pragmatic34:vial+oled // for vial + oled version
 
 Flashing example for this keyboard:
 
@@ -25,3 +26,7 @@ Enter the bootloader in 3 ways:
 * **Bootmagic reset**: Hold down the key at (0,0) in the matrix (usually the top left key or Escape) and plug in the keyboard
 * **Physical reset button**: Briefly press the button on the back of the PCB - some may have pads you must short instead
 * **Keycode in layout**: Press the key mapped to `RESET` if it is available
+
+# Changelog
+## v4.1 2023-04-30
+- Split into two verison, one for oled suppor and one for qmk settings support.
