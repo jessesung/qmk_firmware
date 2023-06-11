@@ -1,0 +1,40 @@
+{
+    "manufacturer": "James Sa",
+    "keyboard_name": "jsa/pad",
+    "maintainer": "James Sa",
+    "bootloader": "atmel-dfu",
+    "diode_direction": "ROW2COL",
+    "features": {
+        "bootmagic": false,
+        "command": false,
+        "console": false,
+        "extrakey": false,
+        "mousekey": false,
+        "nkro": true
+    },
+    "matrix_pins": {
+        "cols": ["B6", "B1", "B3", "F6"],
+        "rows": ["F7", "B2"]
+    },
+    "processor": "atmega32u4",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "layouts": {
+        "LAYOUT_ortho_2x4": {
+            "layout": [
+                { "matrix": [0, 0], "x": 0, "y": 0 },
+                { "matrix": [0, 1], "x": 1, "y": 0 },
+                { "matrix": [0, 2], "x": 2, "y": 0 },
+                { "matrix": [0, 3], "x": 3, "y": 0 },
+                { "matrix": [1, 0], "x": 0, "y": 1 },
+                { "matrix": [1, 1], "x": 1, "y": 1 },
+                { "matrix": [1, 2], "x": 2, "y": 1 },
+                { "matrix": [1, 3], "x": 3, "y": 1 },
+            ]
+        }
+    }
+}
