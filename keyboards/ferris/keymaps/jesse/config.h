@@ -21,3 +21,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 200
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 10
+
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
