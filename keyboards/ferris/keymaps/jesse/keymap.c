@@ -81,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_M, _LS(KC_N), _LC(KC_E), _LA(KC_I), _LG(KC_O),
         KC_Z, KC_X, KC_C, KC_D, KC_V,
             KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH,
-        LT(NAV, KC_TAB), LT(MOUSE, KC_SPC), LT(SYM, KC_ENT), LT(NUM, KC_BSPC)
+        LT(NAV, KC_TAB), LT(MOUSE, KC_SPC), LT(SYM, KC_BSPC), LT(NUM, KC_ENT)
     ),
     [QWERTY] = LAYOUT(
         KC_Q, KC_W, KC_E, KC_R, KC_T,
@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             XXXXXXX, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
         CW_TOGG, KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX,
             KC_INS, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
-        XXXXXXX, XXXXXXX, KC_ENT, KC_BSPC
+        XXXXXXX, XXXXXXX, KC_BSPC, KC_ENT
     ),
     [MOUSE] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -149,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 const uint16_t PROGMEM thumbcombos_base_left[] = {LT(NAV, KC_TAB), LT(MOUSE, KC_SPC), COMBO_END};
-const uint16_t PROGMEM thumbcombos_base_right[] = {LT(SYM, KC_ENT), LT(NUM, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM thumbcombos_base_right[] = {LT(SYM, KC_BSPC), LT(NUM, KC_ENT), COMBO_END};
 const uint16_t PROGMEM thumbcombos_nav[] = {KC_BSPC, KC_ENT, COMBO_END};
 const uint16_t PROGMEM thumbcombos_sym[] = {KC_LPRN, KC_RPRN, COMBO_END};
 const uint16_t PROGMEM thumbcombos_func[] = {KC_SPC, KC_TAB, COMBO_END};
