@@ -170,6 +170,19 @@ void keyboard_post_init_user(void) {
     //   debug_mouse=true;
 }
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case IME:
+            if (record->event.pressed) {
+                layer_invert(QWERTY);
+                SEND_STRING(SS_LCTL(" "));
+            }
+            return false;
+            break;
+    }
+    return true;
+}
+
 #ifdef OLED_ENABLE
 
 bool    oled_needs_update = true;
@@ -214,19 +227,6 @@ bool oled_task_user(void) {
     if (layer_name)
         oled_write(layer_name, false);
     return false;
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
-        case IME:
-            if (record->event.pressed) {
-                layer_invert(QWERTY);
-                SEND_STRING(SS_LCTL(" "));
-            }
-            return false;
-            break;
-    }
-    return true;
 }
 
 #endif // OLED_ENABLE
