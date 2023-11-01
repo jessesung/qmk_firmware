@@ -27,12 +27,6 @@
 #define _RC(X) RCTL_T(X)
 #define _RS(X) RSFT_T(X)
 
-#define REDO C(KC_Y)
-#define COPY C(KC_C)
-#define PSTE C(KC_V)
-#define CUT C(KC_X)
-#define UNDO C(KC_Z)
-
 enum {
     U_TD_BOOT,
 };
@@ -54,8 +48,6 @@ enum my_layers {
     COLEMAK = 0,
     QWERTY,
     NAV,
-    MOUSE,
-    MEDIA,
     NUM,
     SYM,
     FUNC,
@@ -66,8 +58,6 @@ const char *layer_names[TOTAL_LAYER_COUNT] = {
     [COLEMAK] = "COLEMAK",
     [QWERTY]  = "QWERTY",
     [NAV]     = "NAV",
-    [MOUSE]   = "MOUSE",
-    [MEDIA]   = "MEDIA",
     [NUM]     = "NUM",
     [SYM]     = "SYMBOL",
     [FUNC]    = "FUNCTION",
@@ -81,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_M, _LS(KC_N), _LC(KC_E), _LA(KC_I), _LG(KC_O),
         KC_Z, KC_X, KC_C, KC_D, KC_V,
             KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH,
-        LT(NAV, KC_TAB), LT(MOUSE, KC_SPC), LT(SYM, KC_BSPC), LT(NUM, KC_ENT)
+        LT(NAV, KC_TAB), LT(NUM, KC_SPC), LT(SYM, KC_BSPC), LT(FUNC, KC_ENT)
     ),
     [QWERTY] = LAYOUT(
         KC_Q, KC_W, KC_E, KC_R, KC_T,
@@ -93,74 +83,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______
     ),
     [NAV] = LAYOUT(
-        TG(QWERTY), IME, XXXXXXX, XXXXXXX, XXXXXXX,
-            REDO, PSTE, COPY, CUT, UNDO,
+        KC_ESC, TG(QWERTY), IME, XXXXXXX, XXXXXXX,
+            KC_INS, KC_PGUP, XXXXXXX, KC_HOME, XXXXXXX,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,
             XXXXXXX, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
         CW_TOGG, KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX,
-            KC_INS, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
-        XXXXXXX, XXXXXXX, KC_BSPC, KC_ENT
-    ),
-    [MOUSE] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-            REDO, PSTE, COPY, CUT, UNDO,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,
-            XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-            KC_BTN3, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,
-        XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2
-    ),
-    [MEDIA] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,
-            XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-            XXXXXXX, KC_MSTP, KC_MPLY, KC_MUTE, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+            KC_DEL, KC_PGDN, XXXXXXX, KC_END, XXXXXXX,
+        _______, _______, _______, _______
     ),
     [NUM] = LAYOUT(
-        KC_LBRC, KC_7, KC_8, KC_9, KC_RBRC,
-            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_QUOT, KC_4, KC_5, KC_6, KC_EQL,
-            XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-        KC_GRV, KC_1, KC_2, KC_3, KC_BSLS,
-            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_0, KC_MINS, XXXXXXX, XXXXXXX
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+            XXXXXXX, KC_7, KC_8, KC_9, KC_MINS,
+        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,
+            XXXXXXX, KC_4, KC_5, KC_6, KC_PLUS,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+            KC_SLSH, KC_1, KC_2, KC_3, KC_EQL,
+        _______, _______, KC_0, KC_DOT
     ),
     [SYM] = LAYOUT(
-        KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR,
+        KC_LBRC, KC_AMPR, KC_ASTR, XXXXXXX, KC_RBRC,
             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_DQUO, KC_DLR, KC_PERC, KC_CIRC, KC_PLUS,
+        KC_QUOT, KC_CIRC, KC_PERC, KC_DLR, XXXXXXX,
             XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-        KC_TILD, KC_EXLM, KC_AT, KC_HASH, KC_PIPE,
+        KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_BSLS,
             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LPRN, KC_RPRN, XXXXXXX, XXXXXXX
+        KC_LPRN, KC_RPRN, _______, _______
     ),
     [FUNC] = LAYOUT(
         KC_F12, KC_F7, KC_F8, KC_F9, KC_PSCR,
-            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TD(U_TD_BOOT),
+            KC_VOLU, XXXXXXX, XXXXXXX, XXXXXXX, TD(U_TD_BOOT),
         KC_F11, KC_F4, KC_F5, KC_F6, KC_SCRL,
-            XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
+            KC_VOLD, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
         KC_F10, KC_F1, KC_F2, KC_F3, KC_PAUS,
             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_F10, KC_MINS, XXXXXXX, XXXXXXX
+        _______, _______, _______, _______
     ),
 };
-
-const uint16_t PROGMEM thumbcombos_base_left[] = {LT(NAV, KC_TAB), LT(MOUSE, KC_SPC), COMBO_END};
-const uint16_t PROGMEM thumbcombos_base_right[] = {LT(SYM, KC_BSPC), LT(NUM, KC_ENT), COMBO_END};
-const uint16_t PROGMEM thumbcombos_nav[] = {KC_BSPC, KC_ENT, COMBO_END};
-const uint16_t PROGMEM thumbcombos_sym[] = {KC_LPRN, KC_RPRN, COMBO_END};
-const uint16_t PROGMEM thumbcombos_func[] = {KC_SPC, KC_TAB, COMBO_END};
-combo_t key_combos[] = {
-    COMBO(thumbcombos_base_left, LT(MEDIA, KC_ESC)),
-    COMBO(thumbcombos_base_right, LT(FUNC, KC_DEL)),
-    COMBO(thumbcombos_nav, KC_DEL),
-    COMBO(thumbcombos_sym, KC_UNDS),
-    COMBO(thumbcombos_func, KC_APP),
-};
-const uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
 
 void keyboard_post_init_user(void) {
     // Customise these values to desired behaviour
@@ -168,6 +126,19 @@ void keyboard_post_init_user(void) {
     //   debug_matrix=true;
     //   debug_keyboard=true;
     //   debug_mouse=true;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case IME:
+            if (record->event.pressed) {
+                layer_invert(QWERTY);
+                SEND_STRING(SS_LCTL(" "));
+            }
+            return false;
+            break;
+    }
+    return true;
 }
 
 #ifdef OLED_ENABLE
@@ -214,19 +185,6 @@ bool oled_task_user(void) {
     if (layer_name)
         oled_write(layer_name, false);
     return false;
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
-        case IME:
-            if (record->event.pressed) {
-                layer_invert(QWERTY);
-                SEND_STRING(SS_LCTL(" "));
-            }
-            return false;
-            break;
-    }
-    return true;
 }
 
 #endif // OLED_ENABLE
