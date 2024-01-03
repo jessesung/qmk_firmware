@@ -145,14 +145,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 bool    oled_needs_update = true;
 bool    caps_lock         = false;
+bool    caps_word         = false;
 uint8_t layer             = 0;
 
 // for caps lock
 bool led_update_user(led_t led_state) {
-    if (caps_lock == led_state.caps_lock) return true;
-    dprint("caps lock changed\n");
+    if ((caps_lock == led_state.caps_lock) &&
+        (caps_word == is_caps_word_on()))
+        return true;
 
     caps_lock         = led_state.caps_lock;
+    caps_word         = is_caps_word_on();
     oled_needs_update = true;
     return true;
 }
@@ -175,6 +178,8 @@ bool oled_task_user(void) {
     // render caps lock indicator
     if (caps_lock) {
         oled_write_P(PSTR("CAPS LOCK"), false);
+    } else if (caps_word) {
+        oled_write_P(PSTR("CAPS WORD"), false);
     } else {
         oled_write_P(PSTR("PRAGMATIC"), false);
     }
