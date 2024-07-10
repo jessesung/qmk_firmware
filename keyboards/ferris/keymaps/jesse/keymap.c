@@ -29,6 +29,7 @@
 
 enum {
     U_TD_BOOT,
+    TD_H_CTRL_A,
 };
 
 static void u_td_fn_boot(tap_dance_state_t *state, void *user_data) {
@@ -38,6 +39,7 @@ static void u_td_fn_boot(tap_dance_state_t *state, void *user_data) {
 
 tap_dance_action_t tap_dance_actions[] = {
     [U_TD_BOOT] = ACTION_TAP_DANCE_FN(u_td_fn_boot),
+    [TD_H_CTRL_A] = ACTION_TAP_DANCE_DOUBLE(KC_H, C(KC_A)),
 };
 
 enum custom_keycodes {
@@ -70,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _LG(KC_A), _LA(KC_R), _LC(KC_S), _LS(KC_T), KC_G,
             KC_M, _LS(KC_N), _LC(KC_E), _LA(KC_I), _LG(KC_O),
         KC_Z, KC_X, KC_C, KC_D, KC_V,
-            KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH,
+            KC_K, TD(TD_H_CTRL_A), KC_COMM, KC_DOT, KC_SLSH,
         LT(NAV, KC_TAB), LT(NUM, KC_SPC), LT(SYM, KC_ENT), LT(FUNC, KC_BSPC)
     ),
     [QWERTY] = LAYOUT(
