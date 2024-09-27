@@ -44,6 +44,11 @@ enum custom_keycodes {
     IME = SAFE_RANGE,
 };
 
+const uint16_t PROGMEM ctrl_a_combo[] = {KC_D, KC_H, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(ctrl_a_combo, LCTL(KC_A)),
+};
+
 enum my_layers {
     COLEMAK = 0,
     QWERTY,
