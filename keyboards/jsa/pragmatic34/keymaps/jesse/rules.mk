@@ -5,4 +5,3 @@ OLED_ENABLE = yes
 QMK_SETTINGS = no
 TAP_DANCE_ENABLE = yes
 
-EXTRAFLAGS += --param=min-pagesize=0
