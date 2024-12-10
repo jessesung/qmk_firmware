@@ -83,13 +83,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______
     ),
     [NAV] = LAYOUT(
-        KC_ESC, TG(QWERTY), IME, XXXXXXX, XXXXXXX,
+        KC_ESC, TG(QWERTY), XXXXXXX, XXXXXXX, XXXXXXX,
             KC_INS, KC_PGUP, XXXXXXX, KC_HOME, XXXXXXX,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,
             XXXXXXX, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,
         CW_TOGG, KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX,
             KC_DEL, KC_PGDN, XXXXXXX, KC_END, XXXXXXX,
-        _______, _______, _______, _______
+        _______, _______, _______, IME
     ),
     [NUM] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -132,7 +132,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
         case IME:
             if (record->event.pressed) {
-                layer_invert(QWERTY);
                 SEND_STRING(SS_LCTL(" "));
             }
             return false;
